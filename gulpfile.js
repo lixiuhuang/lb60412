@@ -1,3 +1,10 @@
+/*
+ * @Author: lixiuhuang 
+ * @Date: 2019-02-15 11:00:19 
+ * @Last Modified by:     
+ * @Last Modified time: 2019-02-15 11:00:19 
+ */
+
 var gulp = require('gulp'),
     sass = require('gulp-sass'), //sass编译
     autoprefixer = require('gulp-autoprefixer'), //前缀补全
@@ -11,11 +18,11 @@ var gulp = require('gulp'),
     reload = browserSync.reload, //刷新
     gulpSequence = require('gulp-sequence'); //顺序执行
 
-gulp.task('del', function(cb) {
+gulp.task('del', function (cb) {
     del(['dist'], cb);
 })
 
-gulp.task('html', function() {
+gulp.task('html', function () {
     return gulp.src(['src/*.html'])
         .pipe(plumber())
         .pipe(htmlmin({
@@ -34,7 +41,7 @@ gulp.task('html', function() {
         }))
 });
 
-gulp.task('css', function() {
+gulp.task('css', function () {
     return gulp.src(['src/sass/*.scss'])
         .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer('> 1%', 'last 9 versions', 'Firefox ESR', 'ios 5', 'android 2'))
@@ -47,7 +54,7 @@ gulp.task('css', function() {
             stream: true
         }))
 });
-gulp.task('js', function() {
+gulp.task('js', function () {
     return gulp.src(['src/js/**/*.js'])
         .pipe(uglify())
         .pipe(gulp.dest('dist/js'))
@@ -56,7 +63,7 @@ gulp.task('js', function() {
         }))
 });
 
-gulp.task('image', function() {
+gulp.task('image', function () {
     return gulp.src(['src/images/*'])
         .pipe(gulp.dest('dist/images'))
         .pipe(reload({
@@ -64,7 +71,7 @@ gulp.task('image', function() {
         }))
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
     //http server
     browserSync.init({
         server: {
@@ -79,6 +86,6 @@ gulp.task('watch', function() {
     gulp.watch('src/*.html', ['html']);
 });
 
-gulp.task('default', function(cb) {
+gulp.task('default', function (cb) {
     gulpSequence('del', 'image', 'css', 'js', 'html', 'watch', cb);
 });
